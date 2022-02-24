@@ -24,7 +24,7 @@
  *
  * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
  */
-#    define TAPPING_TERM 240
+#define TAPPING_TERM 250
 #endif  // TAPPING_TERM
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_FORCE_HOLD
