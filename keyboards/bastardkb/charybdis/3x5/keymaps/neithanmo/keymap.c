@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -87,6 +87,7 @@ static tap dance_state_tab = {
     .step = 0
 };
 
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -98,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
       KC_Z, KC_X,  TD(DANCE_5),     TD(DANCE_6),         KC_V,      KC_K, TD(DANCE_7), TD(DANCE_8),      KC_DOT,           KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-                            KC_ENT, TO(1),KC_DEL,                     KC_BSPC, KC_SPC
+                            KC_ENT, TO(1), LSFT_T(KC_DEL),                     KC_BSPC, KC_SPC
   //                      ╰───────────────────────────╯               ╰──────────────────╯
   ),
 
@@ -106,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
        KC_ESC, KC_AT, KC_HASH, KC_DLR, KC_PERC,        KC_LBRC,    KC_LPRN,    KC_RPRN, KC_RBRC, KC_BSPC,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
-       KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_ENT,
+       KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_SPC,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, TO(4),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
@@ -130,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
        KC_ESC, KC_MPRV, KC_MPLY, KC_MNXT, KC_UNDS,    KC_MINS, KC_7,    KC_8,    KC_9,    KC_BSPC,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_TAB,   KC_MUTE, KC_VOLD, KC_VOLU, KC_DOT,   KC_PEQL, KC_4,    KC_5,    KC_6,    KC_ENT,
+       KC_TAB,   KC_MUTE, KC_VOLD, KC_VOLU, KC_DOT,   KC_PEQL, KC_4,    KC_5,    KC_6,    KC_SPC,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_PSLS, KC_PAST, KC_BRID,  KC_BRIU, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    TO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
@@ -191,6 +192,12 @@ void on_dance_8(qk_tap_dance_state_t *state, void *user_data);
 uint8_t dance_8_dance_step(qk_tap_dance_state_t *state);
 void dance_8_finished(qk_tap_dance_state_t *state, void *user_data);
 void dance_8_reset(qk_tap_dance_state_t *state, void *user_data);
+
+void on_dance_9(qk_tap_dance_state_t *state, void *user_data);
+uint8_t dance_9_dance_step(qk_tap_dance_state_t *state);
+void dance_9_finished(qk_tap_dance_state_t *state, void *user_data);
+void dance_9_reset(qk_tap_dance_state_t *state, void *user_data);
+
 
 void on_dance_1(qk_tap_dance_state_t *state, void *user_data) {
     if(state->count == 3) {
@@ -552,6 +559,7 @@ void dance_8_reset(qk_tap_dance_state_t *state, void *user_data) {
     }
     dance_state.step = 0;
 }
+
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     [DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_1, dance_1_finished, dance_1_reset),
