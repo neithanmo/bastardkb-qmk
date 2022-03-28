@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
       KC_Z, KC_X,  TD(DANCE_5),     TD(DANCE_6),         KC_V,      KC_K, TD(DANCE_7), TD(DANCE_8),      KC_DOT,           KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-                            KC_ENT, TO(1), LSFT_T(KC_DEL),                     KC_BSPC, KC_SPC
+                            KC_ENT, TO(LAYER_SYM), LSFT_T(KC_DEL),     TO(LAYER_NUM), KC_SPC
   //                      ╰───────────────────────────╯               ╰──────────────────╯
   ),
 
@@ -111,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, TO(4),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-                         TO(0), KC_ENT, TO(2),         KC_LALT, TO(3)
+                         TO(LAYER_BASE), KC_ENT, TO(LAYER_NUM),  KC_LALT, TO(LAYER_NAV)
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -121,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    KC_PGUP, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   KC_PGDN, KC_DOWN, KC_UP,              XXXXXXX,      TO(4),
+       XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   KC_PGDN, KC_DOWN, KC_UP,              XXXXXXX,      TO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
                          TO(LAYER_BASE), KC_BTN2,TO(LAYER_SYM), KC_LALT, TO(LAYER_NUM)
   //                   ╰───────────────────────────╯           ╰──────────────────╯
@@ -135,7 +135,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_PSLS, KC_PAST, KC_BRID,  KC_BRIU, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    TO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         TO(0), KC_ENT, TO(LAYER_SYM),     KC_LALT, TO(LAYER_NAV)
+                         TO(LAYER_BASE), KC_ENT, TO(LAYER_SYM),     KC_LALT, TO(LAYER_NAV)
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
@@ -145,9 +145,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_F5,   KC_F6, KC_F7, KC_F8,  RESET,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_F1, KC_F2, KC_F3,  KC_F4,  XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, TO(3),
+       KC_F1, KC_F2, KC_F3,  KC_F4,  XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, TO(LAYER_NUM),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         TO(0), XXXXXXX, XXXXXXX,     TO(1), TO(2)
+                         TO(LAYER_BASE), XXXXXXX, XXXXXXX,     TO(LAYER_SYM), TO(LAYER_NAV)
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 };
