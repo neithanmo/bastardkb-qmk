@@ -21,6 +21,7 @@
 #include "config_common.h"
 
 /* Pointing device configuration. */
+#define NO_CHARYBDIS_KEYCODES
 
 // Enable use of pointing device on slave split.
 #define SPLIT_POINTING_ENABLE
