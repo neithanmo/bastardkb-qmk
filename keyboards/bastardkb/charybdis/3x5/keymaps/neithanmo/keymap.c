@@ -66,6 +66,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 
 enum tap_dance_codes {
+  DANCE_1, // tap v, hold WIN
   DANCE_2,
   DANCE_3,
   DANCE_5,
@@ -110,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
       KC_Z, KC_X,  TD(DANCE_5),     TD(DANCE_6),         KC_V,      KC_K, TD(DANCE_7), TD(DANCE_8),      KC_DOT,           KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-        LT(LAYER_NUM, KC_ENT), KC_LWIN, KC_TAB,                   TO(LAYER_NAV), LT(LAYER_SYM,KC_SPC)
+        LT(LAYER_NUM, KC_ENT),  OSL(LAYER_SYM), LSFT(KC_LALT),      TO(LAYER_NAV), LT(LAYER_SYM,KC_SPC)
   // ╰───────────────────────────────────────────────────────╯   ╰────────────────────────────────────╯
   ),
 
@@ -118,11 +119,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
        KC_ESC, KC_AT, KC_HASH, KC_DLR, KC_PERC,        KC_LBRC,    KC_LPRN,    KC_RPRN, KC_RBRC, KC_BSPC,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
-       KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_SPC,
+       KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_DEL,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, TO(4),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-        TO(LAYER_BASE), KC_ENT, TO(LAYER_NUM),             KC_LALT, XXXXXXX
+        KC_ENT, XXXXXXX, TO(LAYER_NUM),             KC_LALT, XXXXXXX
   //    ╰──────────────────────────────────────╯          ╰──────────────────╯
   ),
 
@@ -130,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭─────────────────────────────────────────────╮ ╭────────────────────────────────────────────────────────────╮
        KC_ESC, KC_WH_L, KC_PGUP, KC_PGDN, KC_WH_R,    KC_CUT,  KC_UNDO, LCTL(LSFT(KC_TAB)), RCTL(KC_TAB), KC_BSPC,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    XXXXXXX, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
+       KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    XXXXXXX, KC_COPY, KC_PEGAR,           KC_REDO,      KC_DEL,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              XXXXXXX,      TO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
