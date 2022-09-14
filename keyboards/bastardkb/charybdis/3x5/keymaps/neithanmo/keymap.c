@@ -56,19 +56,23 @@ enum charybdis_keymap_layers {
 #define C_LEFT LT(0, KC_C)
 #define D_RIGHT LT(0, KC_D)
 
-
+// combos 
 enum combo_events {
   ESC,
+  NAV,
   COMBO_LENGTH
 };
 
 const uint16_t PROGMEM esc_combo[] = {LCTL_S, RCTL_E, COMBO_END};
+const uint16_t PROGMEM to_nav_combo[] = {LSFT_KT, RSFT_N, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
   [ESC] = COMBO_ACTION(esc_combo),
+  [NAV] = COMBO_ACTION(to_nav_combo),
 };
+
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
@@ -77,6 +81,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         tap_code16(KC_ESC);
       }
       break;
+    case NAV: {
+      if (pressed) {
+        layer_on(LAYER_NAV);
+      }
+
+    } 
   }
 }
 
@@ -85,13 +95,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_BASE] = LAYOUT_charybdis_3x5(
   // ╭───────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
-       KC_Q,    KC_W,  KC_F,  KC_P,                KC_B,             KC_J, KC_L,         KC_U,      Y_OR_,      KC_SCLN,
+       KC_Q,    KC_W,   KC_F,   KC_P,       KC_B,                    KC_J, KC_L,   KC_U,     Y_OR_,  KC_SCLN,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-      KC_A,    LALT_R, LCTL_S,  LSFT_KT, KC_G,   KC_M,                RSFT_N, RCTL_E, RALT_I,     O_MINS,
+       KC_A,    LALT_R, LCTL_S, LSFT_KT,    KC_G,                    KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-      KC_Z, KC_X,  C_LEFT,     D_RIGHT,         KC_V,      KC_K, H_DOWN, COMMA_UP,      KC_DOT,           KC_SLSH,
+       KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-        LT(LAYER_NUM, KC_ENT),  OSL(LAYER_SYM), LSFT_T(KC_TAB),      TO(LAYER_NAV), LT(LAYER_SYM,KC_SPC)
+        LT(LAYER_NUM, KC_ENT),  OSL(LAYER_SYM), LSFT_T(KC_TAB),      KC_LWIN, LT(LAYER_SYM,KC_SPC)
   // ╰───────────────────────────────────────────────────────╯   ╰────────────────────────────────────╯
   ),
 
@@ -103,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, TO(4),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-        KC_ENT, XXXXXXX, TO(LAYER_NUM),             KC_LALT, XXXXXXX
+        KC_ENT, XXXXXXX, TO(LAYER_NUM),                    KC_DEL, XXXXXXX
   //    ╰──────────────────────────────────────╯          ╰──────────────────╯
   ),
 
@@ -125,7 +135,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_TAB,   KC_MUTE, KC_VOLU, KC_VOLD, KC_DOT,   KC_PEQL, KC_4,    KC_5,    KC_6,    KC_SPC,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_PSLS, KC_PAST, KC_BRIU,  KC_BRID, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    TO(LAYER_FUN),
+       KC_PSLS, KC_PAST, KC_BRIU,  KC_BRID, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    KC_PLUS,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
                          TO(LAYER_BASE), KC_ENT, TO(LAYER_SYM),     KC_LALT, TO(LAYER_NAV)
   //                   ╰───────────────────────────╯ ╰──────────────────╯
@@ -143,12 +153,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 };
+
 // clang-format on
-
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-};
-
 static bool process_tap_or_long_press_key(
     keyrecord_t* record,uint16_t long_press_keycode) {
   if (record->tap.count == 0) {  // Key is being held.
