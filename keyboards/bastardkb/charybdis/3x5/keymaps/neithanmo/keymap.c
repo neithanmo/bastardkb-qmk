@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+/*#include "keymap_spanish.h"*/
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
@@ -23,10 +24,12 @@
 enum charybdis_keymap_layers {
     LAYER_BASE = 0,
     LAYER_SYM,
-    LAYER_NAV,
     LAYER_NUM,
+    LAYER_NAV,
     LAYER_FUN,
 };
+
+// ES_NTIL
 
 #define LOWER MO(LAYER_LOWER)
 #define RAISE MO(LAYER_RAISE)
@@ -101,8 +104,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-        LT(LAYER_NUM, KC_ENT),  OSL(LAYER_SYM), LSFT_T(KC_TAB),      KC_LWIN, LT(LAYER_SYM,KC_SPC)
-  // ╰───────────────────────────────────────────────────────╯   ╰────────────────────────────────────╯
+        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_CAPS_LOCK), LSFT_T(KC_TAB),      KC_LWIN, LT(LAYER_SYM,KC_SPC)
+  // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────╯
   ),
 
   [LAYER_SYM] = LAYOUT_charybdis_3x5(
@@ -113,8 +116,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, TO(4),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-        KC_ENT, XXXXXXX, TO(LAYER_NUM),                    KC_DEL, XXXXXXX
-  //    ╰──────────────────────────────────────╯          ╰──────────────────╯
+        KC_BSPC, XXXXXXX, TO(LAYER_BASE),                        KC_DEL, XXXXXXX
+  //    ╰───────────────────────╯                     ╰──────────────────╯
   ),
 
   [LAYER_NAV] = LAYOUT_charybdis_3x5(
@@ -125,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              XXXXXXX,      TO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
-           TO(LAYER_BASE), KC_BTN2,TO(LAYER_SYM),         KC_LALT, TO(LAYER_NUM)
+           KC_BTN2, TO(LAYER_BASE),TO(LAYER_SYM),         KC_LALT, TO(LAYER_NUM)
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
   ),
 
@@ -137,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_PSLS, KC_PAST, KC_BRIU,  KC_BRID, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    KC_PLUS,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         TO(LAYER_BASE), KC_ENT, TO(LAYER_SYM),     KC_LALT, TO(LAYER_NAV)
+                         XXXXXXX, KC_ENT, TO(LAYER_BASE),     KC_LALT, TO(LAYER_NAV)
   //                   ╰───────────────────────────╯ ╰──────────────────╯
   ),
 
