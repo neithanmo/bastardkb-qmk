@@ -49,7 +49,7 @@ enum charybdis_keymap_layers {
 #define RALT_I  RALT_T(KC_I)
 #define LCTL_S  LCTL_T(KC_S)
 #define RCTL_E  RCTL_T(KC_E)
-#define LSFT_KT  LSFT_T(KC_T)
+#define LS_T  LSFT_T(KC_T)
 #define RSFT_N  RSFT_T(KC_N)
 // tap-hold
 #define Y_OR_ LT(0, KC_Y)
@@ -63,33 +63,75 @@ enum charybdis_keymap_layers {
 enum combo_events {
   ESC,
   NAV,
+  CAPS_LOCK,
+  BUFF_NEXT,
+  BUFF_PREV,
+  EMAIL,
   COMBO_LENGTH
 };
 
 const uint16_t PROGMEM esc_combo[] = {LCTL_S, RCTL_E, COMBO_END};
-const uint16_t PROGMEM to_nav_combo[] = {LSFT_KT, RSFT_N, COMBO_END};
+const uint16_t PROGMEM to_nav_combo[] = {KC_F, KC_U, COMBO_END};
+const uint16_t PROGMEM buffer_prev[] = {LALT_R, LS_T, COMBO_END};
+const uint16_t PROGMEM buffer_next[] = {RALT_I, RSFT_N, COMBO_END};
+const uint16_t PROGMEM caps_word[] = {C_LEFT, COMMA_UP, COMBO_END};
+const uint16_t PROGMEM email[] = {KC_G, KC_M, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
   [ESC] = COMBO_ACTION(esc_combo),
   [NAV] = COMBO_ACTION(to_nav_combo),
+  [CAPS_LOCK] = COMBO_ACTION(caps_word),
+  [BUFF_NEXT]= COMBO_ACTION(buffer_next),
+  [BUFF_PREV]= COMBO_ACTION(buffer_prev),
+  [EMAIL]= COMBO_ACTION(email),
 };
-
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
   switch(combo_index) {
-    case ESC:
+    case ESC:{
       if (pressed) {
         tap_code16(KC_ESC);
       }
       break;
+    }
     case NAV: {
       if (pressed) {
         layer_on(LAYER_NAV);
       }
-
+      break;
     } 
+    case CAPS_LOCK: {
+      if (pressed) {
+        /*tap_code16(KC_CAPS_LOCK);*/
+        caps_word_on();
+      }
+      break;
+    } 
+    // to be used in  vim to go to next buffer
+    case BUFF_NEXT: {
+        if (pressed){
+            tap_code16(KC_SPC);
+            tap_code16(KC_N);
+        }
+      break;
+    }
+    // to be used in  vim to go to previous buffer
+    case BUFF_PREV: {
+        if (pressed){
+            tap_code16(C(KC_P));
+        }
+      break;
+    }
+    case EMAIL: {
+        if (pressed){
+            SEND_STRING("neithanmo@gmail.com");
+        }
+      break;
+    }
+    default:
+        break;
   }
 }
 
@@ -100,17 +142,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ╭───────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
        KC_Q,    KC_W,   KC_F,   KC_P,       KC_B,                    KC_J, KC_L,   KC_U,     Y_OR_,  KC_SCLN,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       KC_A,    LALT_R, LCTL_S, LSFT_KT,    KC_G,                    KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
+       KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_CAPS_LOCK), LSFT_T(KC_TAB),      KC_LWIN, LT(LAYER_SYM,KC_SPC)
+        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB), KC_MEH,                     KC_LWIN, LT(LAYER_SYM,KC_SPC)
   // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────╯
   ),
 
   [LAYER_SYM] = LAYOUT_charybdis_3x5(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
-       KC_ESC, KC_AT, KC_HASH, KC_DLR, KC_PERC,        KC_LBRC,    KC_LPRN,    KC_RPRN, KC_RBRC, KC_BSPC,
+       KC_BSPC, KC_AT, KC_HASH, KC_DLR, KC_PERC,        KC_LBRC,    KC_LPRN,    KC_RPRN, KC_RBRC, KC_BSPC,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_ENT,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
@@ -128,7 +170,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              XXXXXXX,      TO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
-           KC_BTN2, TO(LAYER_BASE),TO(LAYER_SYM),         KC_LALT, TO(LAYER_NUM)
+           TO(LAYER_BASE), KC_BTN2,TO(LAYER_SYM),         KC_LALT, KC_ENT
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
   ),
 
@@ -140,8 +182,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_PSLS, KC_PAST, KC_BRIU,  KC_BRID, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    KC_PLUS,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         XXXXXXX, KC_ENT, TO(LAYER_BASE),     KC_LALT, TO(LAYER_NAV)
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
+             XXXXXXX, KC_ENT, TO(LAYER_NAV),           KC_LALT, TO(LAYER_BASE)
+  //        ╰───────────────────────────╯               ╰──────────────────╯
   ),
 
   [LAYER_FUN] = LAYOUT_charybdis_3x5(
