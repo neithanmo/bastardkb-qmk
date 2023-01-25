@@ -24,7 +24,7 @@
 #define NO_CHARYBDIS_KEYCODES
 
 // Enable use of pointing device on slave split.
-#define SPLIT_POINTING_ENABLE
+//#define SPLIT_POINTING_ENABLE
 
 // Pointing device is on the right split.
 #define POINTING_DEVICE_RIGHT

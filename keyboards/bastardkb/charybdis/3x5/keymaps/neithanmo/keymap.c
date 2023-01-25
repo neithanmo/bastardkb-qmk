@@ -112,15 +112,16 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     // to be used in  vim to go to next buffer
     case BUFF_NEXT: {
         if (pressed){
-            tap_code16(KC_SPC);
-            tap_code16(KC_N);
+            SEND_STRING(":bn");
+            tap_code16(KC_ENT);
         }
       break;
     }
     // to be used in  vim to go to previous buffer
     case BUFF_PREV: {
         if (pressed){
-            tap_code16(C(KC_P));
+            SEND_STRING(":bp");
+            tap_code16(KC_ENT);
         }
       break;
     }
