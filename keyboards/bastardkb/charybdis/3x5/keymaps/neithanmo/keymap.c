@@ -66,15 +66,15 @@ enum combo_events {
   CAPS_LOCK,
   BUFF_NEXT,
   BUFF_PREV,
-  EMAIL,
+  /*EMAIL,*/
   COMBO_LENGTH
 };
 
 const uint16_t PROGMEM esc_combo[] = {LCTL_S, RCTL_E, COMBO_END};
-const uint16_t PROGMEM to_nav_combo[] = {KC_F, KC_U, COMBO_END};
+const uint16_t PROGMEM to_nav_combo[] = {C_LEFT, COMMA_UP, COMBO_END};
 const uint16_t PROGMEM buffer_prev[] = {LALT_R, LS_T, COMBO_END};
 const uint16_t PROGMEM buffer_next[] = {RALT_I, RSFT_N, COMBO_END};
-const uint16_t PROGMEM caps_word[] = {C_LEFT, COMMA_UP, COMBO_END};
+const uint16_t PROGMEM caps_word[] = {KC_F, KC_U, COMBO_END};
 const uint16_t PROGMEM email[] = {KC_G, KC_M, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
@@ -85,7 +85,7 @@ combo_t key_combos[] = {
   [CAPS_LOCK] = COMBO_ACTION(caps_word),
   [BUFF_NEXT]= COMBO_ACTION(buffer_next),
   [BUFF_PREV]= COMBO_ACTION(buffer_prev),
-  [EMAIL]= COMBO_ACTION(email),
+  /*[EMAIL]= COMBO_ACTION(email),*/
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -124,12 +124,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
       break;
     }
-    case EMAIL: {
-        if (pressed){
-            SEND_STRING("neithanmo@gmail.com");
-        }
-      break;
-    }
+    /*case EMAIL: {*/
+        /*if (pressed){*/
+            /*SEND_STRING("neithanmo@gmail.com");*/
+        /*}*/
+      /*break;*/
+    /*}*/
     default:
         break;
   }
