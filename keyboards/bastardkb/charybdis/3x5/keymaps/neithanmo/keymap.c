@@ -171,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              XXXXXXX,      TO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
-           TO(LAYER_BASE), KC_BTN2,TO(LAYER_SYM),         KC_LALT, KC_ENT
+           TO(LAYER_BASE), KC_BTN2, XXXXXXX,                 KC_LALT, KC_ENT
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
   ),
 
@@ -183,8 +183,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_PSLS, KC_PAST, KC_BRIU,  KC_BRID, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    KC_PLUS,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-             XXXXXXX, KC_ENT, TO(LAYER_NAV),           KC_LALT, TO(LAYER_BASE)
-  //        ╰───────────────────────────╯               ╰──────────────────╯
+             XXXXXXX, KC_ENT, XXXXXXX,                   KC_LALT,    KC_DOT
+  //        ╰───────────────────────────╯               ╰───────────────────────╯
   ),
 
   [LAYER_FUN] = LAYOUT_charybdis_3x5(
@@ -195,8 +195,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
        KC_F1, KC_F2, KC_F3,  KC_F4,  XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, TO(LAYER_NUM),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         TO(LAYER_BASE), XXXXXXX, XXXXXXX,     TO(LAYER_SYM), TO(LAYER_NAV)
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
+            TO(LAYER_BASE), XXXXXXX, XXXXXXX,              TO(LAYER_SYM), TO(LAYER_NAV)
+  //      ╰───────────────────────────────────╯          ╰───────────────────────────────╯
   ),
 };
 
