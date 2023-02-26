@@ -19,7 +19,7 @@
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
-#endif  // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 enum charybdis_keymap_layers {
     LAYER_BASE = 0,
@@ -45,12 +45,12 @@ enum charybdis_keymap_layers {
 #define KC_REDO LCTL(KC_Y)
 
 // MT modifiers
-#define LALT_R  LALT_T(KC_R)
-#define RALT_I  RALT_T(KC_I)
-#define LCTL_S  LCTL_T(KC_S)
-#define RCTL_E  RCTL_T(KC_E)
-#define LS_T  LSFT_T(KC_T)
-#define RSFT_N  RSFT_T(KC_N)
+#define LALT_R LALT_T(KC_R)
+#define RALT_I RALT_T(KC_I)
+#define LCTL_S LCTL_T(KC_S)
+#define RCTL_E RCTL_T(KC_E)
+#define LS_T LSFT_T(KC_T)
+#define RSFT_N RSFT_T(KC_N)
 // tap-hold
 #define Y_OR_ LT(0, KC_Y)
 #define O_MINS LT(0, KC_O)
@@ -59,81 +59,76 @@ enum charybdis_keymap_layers {
 #define C_LEFT LT(0, KC_C)
 #define D_RIGHT LT(0, KC_D)
 
-// combos 
+// combos
 enum combo_events {
-  ESC,
-  NAV,
-  CAPS_LOCK,
-  BUFF_NEXT,
-  BUFF_PREV,
-  /*EMAIL,*/
-  COMBO_LENGTH
+    ESC,
+    NAV,
+    CAPS_LOCK,
+    BUFF_NEXT,
+    BUFF_PREV,
+    /*EMAIL,*/
+    COMBO_LENGTH
 };
 
-const uint16_t PROGMEM esc_combo[] = {LCTL_S, RCTL_E, COMBO_END};
+const uint16_t PROGMEM esc_combo[]    = {LCTL_S, RCTL_E, COMBO_END};
 const uint16_t PROGMEM to_nav_combo[] = {C_LEFT, COMMA_UP, COMBO_END};
-const uint16_t PROGMEM buffer_prev[] = {LALT_R, LS_T, COMBO_END};
-const uint16_t PROGMEM buffer_next[] = {RALT_I, RSFT_N, COMBO_END};
-const uint16_t PROGMEM caps_word[] = {KC_F, KC_U, COMBO_END};
-const uint16_t PROGMEM email[] = {KC_G, KC_M, COMBO_END};
+const uint16_t PROGMEM buffer_prev[]  = {LALT_R, LS_T, COMBO_END};
+const uint16_t PROGMEM buffer_next[]  = {RALT_I, RSFT_N, COMBO_END};
+const uint16_t PROGMEM caps_word[]    = {KC_F, KC_U, COMBO_END};
+const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-  [ESC] = COMBO_ACTION(esc_combo),
-  [NAV] = COMBO_ACTION(to_nav_combo),
-  [CAPS_LOCK] = COMBO_ACTION(caps_word),
-  [BUFF_NEXT]= COMBO_ACTION(buffer_next),
-  [BUFF_PREV]= COMBO_ACTION(buffer_prev),
-  /*[EMAIL]= COMBO_ACTION(email),*/
+    [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO_ACTION(to_nav_combo), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
+    /*[EMAIL]= COMBO_ACTION(email),*/
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
-  switch(combo_index) {
-    case ESC:{
-      if (pressed) {
-        tap_code16(KC_ESC);
-      }
-      break;
-    }
-    case NAV: {
-      if (pressed) {
-        layer_on(LAYER_NAV);
-      }
-      break;
-    } 
-    case CAPS_LOCK: {
-      if (pressed) {
-        /*tap_code16(KC_CAPS_LOCK);*/
-        caps_word_on();
-      }
-      break;
-    } 
-    // to be used in  vim to go to next buffer
-    case BUFF_NEXT: {
-        if (pressed){
-            SEND_STRING(":bn");
-            tap_code16(KC_ENT);
+    switch (combo_index) {
+        case ESC: {
+            if (pressed) {
+                tap_code16(KC_ESC);
+            }
+            break;
         }
-      break;
-    }
-    // to be used in  vim to go to previous buffer
-    case BUFF_PREV: {
-        if (pressed){
-            SEND_STRING(":bp");
-            tap_code16(KC_ENT);
+        case NAV: {
+            if (pressed) {
+                layer_on(LAYER_NAV);
+            }
+            break;
         }
-      break;
-    }
-    /*case EMAIL: {*/
-        /*if (pressed){*/
+        case CAPS_LOCK: {
+            if (pressed) {
+                caps_word_on();
+            }
+            break;
+        }
+        // to be used in  vim to go to next buffer
+        case BUFF_NEXT: {
+            if (pressed) {
+                SEND_STRING(":bn");
+                tap_code16(KC_ENT);
+            }
+            break;
+        }
+        // to be used in  vim to go to previous buffer
+        case BUFF_PREV: {
+            if (pressed) {
+                SEND_STRING(":bp");
+                tap_code16(KC_ENT);
+            }
+            break;
+        }
+            /*case EMAIL: {*/
+            /*if (pressed){*/
             /*SEND_STRING("neithanmo@gmail.com");*/
+            /*}*/
+            /*break;*/
         /*}*/
-      /*break;*/
-    /*}*/
-    default:
-        break;
-  }
+        default:
+            break;
+    }
 }
 
 // clang-format off
@@ -157,10 +152,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_ENT,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
-       KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, TO(4),
+       KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, MO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-        KC_BSPC, XXXXXXX, TO(LAYER_BASE),                        KC_DEL, XXXXXXX
-  //    ╰───────────────────────╯                     ╰──────────────────╯
+        KC_BSPC, XXXXXXX, XXXXXXX,                        KC_DEL, XXXXXXX
+  //    ╰───────────────────────────╯                     ╰──────────────────╯
   ),
 
   [LAYER_NAV] = LAYOUT_charybdis_3x5(
@@ -169,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    XXXXXXX, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              XXXXXXX,      TO(LAYER_FUN),
+       XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              KC_RALT,      MO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
            TO(LAYER_BASE), KC_BTN2, XXXXXXX,                 KC_LALT, KC_ENT
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
@@ -189,46 +184,56 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_FUN] = LAYOUT_charybdis_3x5(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR,         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       XXXXXXX, KC_F7, KC_F8, KC_F9, KC_PSCR,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_F5,   KC_F6, KC_F7, KC_F8,  RESET,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       XXXXXXX, KC_F4, KC_F5, KC_F6,  RESET,            XXXXXXX, KC_F10, KC_F11, KC_F12, XXXXXXX,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_F1, KC_F2, KC_F3,  KC_F4,  XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, TO(LAYER_NUM),
+       XXXXXXX, KC_F1, KC_F2,  KC_F3,  XXXXXXX,         XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-            TO(LAYER_BASE), XXXXXXX, XXXXXXX,              TO(LAYER_SYM), TO(LAYER_NAV)
+            TO(LAYER_BASE), XXXXXXX, XXXXXXX,              XXXXXXX, XXXXXXX
   //      ╰───────────────────────────────────╯          ╰───────────────────────────────╯
   ),
 };
 
 // clang-format on
-static bool process_tap_or_long_press_key(
-    keyrecord_t* record,uint16_t long_press_keycode) {
-  if (record->tap.count == 0) {  // Key is being held.
-    if (record->event.pressed) {
-        register_code16(long_press_keycode);
-    } else {
-        unregister_code16(long_press_keycode);
+static bool process_tap_or_long_press_key(keyrecord_t* record, uint16_t long_press_keycode) {
+    if (record->tap.count == 0) { // Key is being held.
+        if (record->event.pressed) {
+            register_code16(long_press_keycode);
+        } else {
+            unregister_code16(long_press_keycode);
+        }
+        return false; // Skip default handling.
     }
-    return false;  // Skip default handling.
-  }
-  return true;  // Continue default handling.
+    return true; // Continue default handling.
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-  switch (keycode) {
-    case Y_OR_:  // Y on tap and _ on long press.
-      return process_tap_or_long_press_key(record, KC_UNDS);
-    case O_MINS:  // Comma on tap, Ctrl+C on long press.
-      return process_tap_or_long_press_key(record, KC_MINS);
-    case H_DOWN:  // Comma on tap, Ctrl+C on long press.
-      return process_tap_or_long_press_key(record, KC_DOWN);
-    case COMMA_UP:  // Comma on tap, Ctrl+C on long press.
-      return process_tap_or_long_press_key(record, KC_UP);
-    case D_RIGHT:  // Comma on tap, Ctrl+C on long press.
-      return process_tap_or_long_press_key(record, KC_RIGHT);
-    case C_LEFT:  // Comma on tap, Ctrl+C on long press.
-      return process_tap_or_long_press_key(record, KC_LEFT);
-  }
+    switch (keycode) {
+        case Y_OR_: // Y on tap and _ on long press.
+            return process_tap_or_long_press_key(record, KC_UNDS);
+        case O_MINS: // Comma on tap, Ctrl+C on long press.
+            return process_tap_or_long_press_key(record, KC_MINS);
+        case H_DOWN: // Comma on tap, Ctrl+C on long press.
+            return process_tap_or_long_press_key(record, KC_DOWN);
+        case COMMA_UP: // Comma on tap, Ctrl+C on long press.
+            return process_tap_or_long_press_key(record, KC_UP);
+        case D_RIGHT: // Comma on tap, Ctrl+C on long press.
+            return process_tap_or_long_press_key(record, KC_RIGHT);
+        case C_LEFT: // Comma on tap, Ctrl+C on long press.
+            return process_tap_or_long_press_key(record, KC_LEFT);
+    }
 
-  return true;
+    return true;
+}
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    static char x = 0;
+    static char y = 0;
+    if (x != mouse_report.x && y != mouse_report.y) {
+        x = mouse_report.x;
+        y = mouse_report.y;
+        if (!IS_LAYER_ON(LAYER_NAV)) layer_on(LAYER_NAV);
+    }
+    return mouse_report;
 }
