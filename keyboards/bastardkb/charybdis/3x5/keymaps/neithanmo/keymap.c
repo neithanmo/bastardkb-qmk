@@ -80,7 +80,8 @@ const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-    [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO_ACTION(to_nav_combo), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
+    // [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO_ACTION(to_nav_combo), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
+    [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
     /*[EMAIL]= COMBO_ACTION(email),*/
 };
 
@@ -89,12 +90,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case ESC: {
             if (pressed) {
                 tap_code16(KC_ESC);
-            }
-            break;
-        }
-        case NAV: {
-            if (pressed) {
-                layer_on(LAYER_NAV);
             }
             break;
         }
@@ -142,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB), KC_MEH,                     KC_LWIN, LT(LAYER_SYM,KC_SPC)
+        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB), KC_MEH,                    LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
   // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────╯
   ),
 
@@ -164,9 +159,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    XXXXXXX, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              KC_RALT,      MO(LAYER_FUN),
+       XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              KC_RALT,    XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
-           TO(LAYER_BASE), KC_BTN2, XXXXXXX,                 KC_LALT, KC_ENT
+           TO(LAYER_BASE), KC_BTN2, XXXXXXX,                 KC_LWIN, KC_ENT
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
   ),
 

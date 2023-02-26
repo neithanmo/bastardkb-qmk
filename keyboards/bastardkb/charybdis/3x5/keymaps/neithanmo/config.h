@@ -24,20 +24,17 @@
  *
  * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
  */
-#define TAPPING_TERM 280
-#endif  // TAPPING_TERM
+#    define TAPPING_TERM 280
+#endif // TAPPING_TERM
 
 #define PERMISSIVE_HOLD
 
 #define IGNORE_MOD_TAP_INTERRUPT
-//#define HOLD_ON_OTHER_KEY_PRESS
+// #define HOLD_ON_OTHER_KEY_PRESS
 #define TAPPING_FORCE_HOLD
 #define RETRO_TAPPING
-#define ONESHOT_TAP_TOGGLE 2  /* Tapping this number of times holds the key until tapped once again. */
+#define ONESHOT_TAP_TOGGLE 2 /* Tapping this number of times holds the key until tapped once again. */
 #define ONESHOT_TIMEOUT 5000
-
-
-
 
 #undef MOUSEKEY_DELAY
 #define MOUSEKEY_DELAY 5
@@ -63,3 +60,5 @@
 
 #define COMBO_MUST_HOLD_MODS
 #define COMBO_TERM 60
+
+#define COMBO_ONLY_FROM_LAYER 0
