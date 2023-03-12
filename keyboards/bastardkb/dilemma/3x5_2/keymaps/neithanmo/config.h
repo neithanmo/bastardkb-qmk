@@ -98,3 +98,5 @@
 
 #define COMBO_MUST_HOLD_MODS
 #define COMBO_TERM 60
+
+#define COMBO_ONLY_FROM_LAYER 0

@@ -77,7 +77,7 @@ const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-    [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO_ACTION(to_nav_combo), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
+    [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
     /*[EMAIL]= COMBO_ACTION(email),*/
 };
 
@@ -89,15 +89,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
         }
-        case NAV: {
-            if (pressed) {
-                layer_on(LAYER_NAV);
-            }
-            break;
-        }
         case CAPS_LOCK: {
             if (pressed) {
-                /*tap_code16(KC_CAPS_LOCK);*/
                 caps_word_on();
             }
             break;
@@ -140,8 +133,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                             KC_LWIN, LT(LAYER_SYM,KC_SPC)
-  // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────╯
+        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                           LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
+  // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────────╯
   ),
 
   [LAYER_SYM] = LAYOUT_split_3x5_2(
@@ -150,10 +143,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_ENT,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
-       KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, TO(4),
+       KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, MO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-        KC_BSPC, XXXXXXX,                               KC_DEL, XXXXXXX
-  //    ╰───────────────────────╯                     ╰──────────────────╯
+        KC_BSPC, XXXXXXX,                                   KC_DEL, XXXXXXX
+  //    ╰───────────────────────────╯                     ╰──────────────────╯
   ),
 
   [LAYER_NAV] = LAYOUT_split_3x5_2(
@@ -162,9 +155,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    XXXXXXX, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              XXXXXXX,      TO(LAYER_FUN),
+       XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              KC_RALT,    XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
-           TO(LAYER_BASE), KC_BTN2,                          KC_LALT, KC_ENT
+           KC_BTN2, TO(LAYER_BASE),                         KC_LWIN, KC_ENT
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
   ),
 
@@ -182,13 +175,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_FUN] = LAYOUT_split_3x5_2(
   // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR,         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       XXXXXXX, KC_F7, KC_F8, KC_F9, KC_PSCR,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_F5,   KC_F6, KC_F7, KC_F8,  QK_REBOOT,       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+       XXXXXXX, KC_F4, KC_F5, KC_F6,  QK_RBT,            XXXXXXX, KC_F10, KC_F11, KC_F12, XXXXXXX,
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_F1, KC_F2, KC_F3,  KC_F4,  XXXXXXX,           XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, TO(LAYER_NUM),
+       XXXXXXX, KC_F1, KC_F2,  KC_F3,  XXXXXXX,         XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-            TO(LAYER_BASE), XXXXXXX,                       TO(LAYER_SYM), TO(LAYER_NAV)
+            TO(LAYER_BASE), XXXXXXX,                        XXXXXXX, XXXXXXX
   //      ╰───────────────────────────────────╯          ╰───────────────────────────────╯
   ),
 };
@@ -232,4 +225,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
 
     return true;
+}
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    static char x = 0;
+    static char y = 0;
+    if (x != mouse_report.x && y != mouse_report.y) {
+        x = mouse_report.x;
+        y = mouse_report.y;
+        if (!IS_LAYER_ON(LAYER_NAV)) layer_on(LAYER_NAV);
+    }
+    return mouse_report;
 }

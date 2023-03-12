@@ -3,6 +3,7 @@ MCU = RP2040
 
 # Bootloader selection
 BOOTLOADER = rp2040
+VIA_ENABLE = yes
 
 # Build Options
 #   change yes to no to disable
@@ -37,3 +38,4 @@ TAP_DANCE_ENABLE = no
 CAPS_WORD_ENABLE = yes
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 COMBO_ENABLE = yes
+MOUSEKEY_ENABLE = yes
