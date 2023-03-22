@@ -80,9 +80,7 @@ const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-    // [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO_ACTION(to_nav_combo), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
     [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
-    /*[EMAIL]= COMBO_ACTION(email),*/
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -102,16 +100,14 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         // to be used in  vim to go to next buffer
         case BUFF_NEXT: {
             if (pressed) {
-                SEND_STRING(":bn");
-                tap_code16(KC_ENT);
+                tap_code16(KC_F3);
             }
             break;
         }
         // to be used in  vim to go to previous buffer
         case BUFF_PREV: {
             if (pressed) {
-                SEND_STRING(":bp");
-                tap_code16(KC_ENT);
+                tap_code16(KC_F2);
             }
             break;
         }
@@ -149,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
        KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, MO(LAYER_FUN),
   // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-        KC_BSPC, XXXXXXX, XXXXXXX,                        KC_DEL, XXXXXXX
+        KC_BSPC, XXXXXXX, XXXXXXX,                          KC_DEL, XXXXXXX
   //    ╰───────────────────────────╯                     ╰──────────────────╯
   ),
 
