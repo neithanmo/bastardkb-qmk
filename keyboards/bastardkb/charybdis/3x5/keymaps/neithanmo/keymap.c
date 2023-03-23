@@ -151,13 +151,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_NAV] = LAYOUT_charybdis_3x5(
   // ╭─────────────────────────────────────────────╮ ╭────────────────────────────────────────────────────────────╮
-       KC_ESC, KC_WH_L, KC_PGUP, KC_PGDN, KC_WH_R,    KC_CUT,  KC_UNDO, LCTL(LSFT(KC_TAB)), RCTL(KC_TAB), KC_BSPC,
+       KC_ESC, KC_WH_L, KC_PGUP, KC_PGDN, KC_WH_R,    XXXXXXX,  KC_UNDO, LCTL(LSFT(KC_TAB)), RCTL(KC_TAB), KC_BSPC,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    XXXXXXX, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
+       KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    KC_CUT, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
   // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
        XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              KC_RALT,    XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
-           TO(LAYER_BASE), KC_BTN2, XXXXXXX,                 KC_LWIN, KC_ENT
+           KC_BTN2, TO(LAYER_BASE), XXXXXXX,                 KC_LWIN, KC_ENT
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
   ),
 
