@@ -63,7 +63,12 @@ enum combo_events {
     CAPS_LOCK,
     BUFF_NEXT,
     BUFF_PREV,
-    /*EMAIL,*/
+    CLOSE_BUFF,
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    EMAIL,
     COMBO_LENGTH
 };
 
@@ -72,13 +77,19 @@ const uint16_t PROGMEM to_nav_combo[] = {C_LEFT, COMMA_UP, COMBO_END};
 const uint16_t PROGMEM buffer_prev[]  = {LALT_R, LS_T, COMBO_END};
 const uint16_t PROGMEM buffer_next[]  = {RALT_I, RSFT_N, COMBO_END};
 const uint16_t PROGMEM caps_word[]    = {KC_F, KC_U, COMBO_END};
+const uint16_t PROGMEM close_buffer[] = {H_DOWN, KC_DOT, COMBO_END};
+const uint16_t PROGMEM up[] =           {KC_H, KC_COMM, COMBO_END};
+const uint16_t PROGMEM down[] =         {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM left[] =         {KC_C, KC_D, COMBO_END};
+const uint16_t PROGMEM right[] =        {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
     [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
-    /*[EMAIL]= COMBO_ACTION(email),*/
+    [CLOSE_BUFF] = COMBO_ACTION(close_buffer), [UP] = COMBO_ACTION(up),[DOWN] = COMBO_ACTION(down),[LEFT] = COMBO_ACTION(left), [RIGHT] = COMBO_ACTION(right),
+    [EMAIL]= COMBO_ACTION(email),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -109,12 +120,43 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
         }
-            /*case EMAIL: {*/
-            /*if (pressed){*/
-            /*SEND_STRING("neithanmo@gmail.com");*/
-            /*}*/
-            /*break;*/
-        /*}*/
+        case CLOSE_BUFF: {
+            if (pressed) {
+                SEND_STRING(":bd");
+                tap_code16(KC_ENT);
+            }
+            break;
+        }
+        case UP: {
+            if (pressed){
+                tap_code16(KC_UP);
+            }
+            break;
+        }
+        case DOWN: {
+            if (pressed){
+                tap_code16(KC_DOWN);
+            }
+            break;
+        }
+        case LEFT: {
+            if (pressed){
+                tap_code16(KC_LEFT);
+            }
+            break;
+        }
+        case RIGHT: {
+            if (pressed){
+                tap_code16(KC_RIGHT);
+            }
+            break;
+        }
+        case EMAIL: {
+            if (pressed){
+                SEND_STRING("neithanmo@gmail.com");
+            }
+            break;
+        }
         default:
             break;
     }
@@ -129,7 +171,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
+       // KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
+       KC_Z,    KC_X,   KC_C, KC_D,    KC_V,                         KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
         LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                           LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
   // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────────╯
