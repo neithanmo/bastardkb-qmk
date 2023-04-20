@@ -70,7 +70,9 @@ enum combo_events {
     RIGHT,
     CORCHETES,
     PARENTESIS,
-    // P_CUADRADOS,
+    P_CUADRADOS,
+    PAGE_UP,
+    PAGE_DOWN,
     EMAIL,
     COMBO_LENGTH
 };
@@ -81,25 +83,23 @@ const uint16_t PROGMEM buffer_prev[]  = {LALT_R, LS_T, COMBO_END};
 const uint16_t PROGMEM buffer_next[]  = {RALT_I, RSFT_N, COMBO_END};
 const uint16_t PROGMEM caps_word[]    = {KC_F, KC_U, COMBO_END};
 const uint16_t PROGMEM close_buffer[] = {KC_H, KC_DOT, COMBO_END};
-// const uint16_t PROGMEM down[] =           {H_DOWN, UP_COMMA, COMBO_END};
-// const uint16_t PROGMEM up[] =         {UP_COMMA, KC_DOT, COMBO_END};
-// const uint16_t PROGMEM right[] =         {D_RIGHT, C_LEFT, COMBO_END};
-// const uint16_t PROGMEM left[] =        {KC_X, C_LEFT, COMBO_END};
-const uint16_t PROGMEM up[] =           {KC_H, KC_COMM, COMBO_END};
-const uint16_t PROGMEM down[] =         {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM down[] =           {KC_H, KC_COMM, COMBO_END};
+const uint16_t PROGMEM up[] =         {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM right[] =         {KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM left[] =        {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
 const uint16_t PROGMEM corchetes[]        = {KC_L, Y_OR_, COMBO_END};
 const uint16_t PROGMEM parentesis[]        = {KC_W, KC_P, COMBO_END};
-// const uint16_t PROGMEM p_cuadrados[]        = {KC_G, KC_M, COMBO_END};
+const uint16_t PROGMEM p_cuadrados[]        = {KC_Q, KC_B, COMBO_END};
+const uint16_t PROGMEM page_up[]        = {LCTL_S, RSFT_N, COMBO_END};
+const uint16_t PROGMEM page_down[]        = {LCTL_S, RALT_I, COMBO_END};
+const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
     [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
     [CLOSE_BUFF] = COMBO_ACTION(close_buffer), [UP] = COMBO_ACTION(up),[DOWN] = COMBO_ACTION(down),[LEFT] = COMBO_ACTION(left), [RIGHT] = COMBO_ACTION(right),
-    [EMAIL]= COMBO_ACTION(email),[CORCHETES]= COMBO_ACTION(corchetes),[PARENTESIS]= COMBO_ACTION(parentesis),
+    [EMAIL]= COMBO_ACTION(email),[CORCHETES]= COMBO_ACTION(corchetes),[P_CUADRADOS]= COMBO_ACTION(p_cuadrados),[PARENTESIS]= COMBO_ACTION(parentesis),[PAGE_UP]= COMBO_ACTION(page_up),[PAGE_DOWN]= COMBO_ACTION(page_down),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -183,6 +183,29 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
         }
+        case P_CUADRADOS: {
+            if (pressed){
+                SEND_STRING("[]");
+                tap_code16(KC_LEFT);
+            }
+            break;
+        }
+        case PAGE_DOWN: {
+            if (pressed){
+                register_code16(KC_PAGE_DOWN);
+            } else {
+                unregister_code16(KC_PAGE_DOWN);
+            }
+            break;
+        }
+        case PAGE_UP: {
+            if (pressed){
+                register_code16(KC_PAGE_UP);
+            } else {
+                unregister_code16(KC_PAGE_UP);
+            }
+            break;
+        }
         case EMAIL: {
             if (pressed){
                 SEND_STRING("neithanmo@gmail.com");
@@ -203,7 +226,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       // KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, UP_COMMA, KC_DOT, KC_SLSH,
        KC_Z,    KC_X,   KC_C, KC_D,    KC_V,                         KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
         LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                           LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
@@ -224,11 +246,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_NAV] = LAYOUT_split_3x5_2(
   // ╭─────────────────────────────────────────────╮ ╭────────────────────────────────────────────────────────────╮
-       KC_ESC, KC_WH_L, KC_PGUP, KC_PGDN, KC_WH_R,    KC_CUT,  KC_UNDO, LCTL(LSFT(KC_TAB)), RCTL(KC_TAB), KC_BSPC,
-  // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,    XXXXXXX, KC_COPY, KC_PEGAR,           KC_REDO,      KC_ENT,
-  // ├─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────┤
-       XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,   XXXXXXX, KC_DOWN, KC_UP,              KC_RALT,    XXXXXXX,
+       KC_ESC, KC_WH_L, KC_PGUP, KC_PGDN, KC_WH_R,        XXXXXXX,  KC_UNDO, XXXXXXX, XXXXXXX, KC_BSPC,
+  // ├─────────────────────────────────────────────┤ ├    ────────────────────────────────────────────────────────────┤
+       KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,        KC_CUT, KC_COPY, KC_PEGAR,  KC_REDO, KC_ENT,
+  // ├─────────────────────────────────────────────┤ ├    ────────────────────────────────────────────────────────────┤
+       XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,       XXXXXXX, KC_DOWN, KC_UP,    KC_RALT, XXXXXXX,
   // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
            KC_BTN2, TO(LAYER_BASE),                         KC_LWIN, KC_ENT
   //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
