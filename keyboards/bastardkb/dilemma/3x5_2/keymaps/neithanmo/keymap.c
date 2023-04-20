@@ -52,7 +52,7 @@ enum keymap_layers {
 #define Y_OR_ LT(0, KC_Y)
 #define O_MINS LT(0, KC_O)
 #define H_DOWN LT(0, KC_H)
-#define COMMA_UP LT(0, KC_COMM)
+#define UP_COMMA LT(0, KC_COMM)
 #define C_LEFT LT(0, KC_C)
 #define D_RIGHT LT(0, KC_D)
 
@@ -68,28 +68,38 @@ enum combo_events {
     DOWN,
     LEFT,
     RIGHT,
+    CORCHETES,
+    PARENTESIS,
+    // P_CUADRADOS,
     EMAIL,
     COMBO_LENGTH
 };
 
 const uint16_t PROGMEM esc_combo[]    = {LCTL_S, RCTL_E, COMBO_END};
-const uint16_t PROGMEM to_nav_combo[] = {C_LEFT, COMMA_UP, COMBO_END};
+const uint16_t PROGMEM to_nav_combo[] = {C_LEFT, UP_COMMA, COMBO_END};
 const uint16_t PROGMEM buffer_prev[]  = {LALT_R, LS_T, COMBO_END};
 const uint16_t PROGMEM buffer_next[]  = {RALT_I, RSFT_N, COMBO_END};
 const uint16_t PROGMEM caps_word[]    = {KC_F, KC_U, COMBO_END};
-const uint16_t PROGMEM close_buffer[] = {H_DOWN, KC_DOT, COMBO_END};
+const uint16_t PROGMEM close_buffer[] = {KC_H, KC_DOT, COMBO_END};
+// const uint16_t PROGMEM down[] =           {H_DOWN, UP_COMMA, COMBO_END};
+// const uint16_t PROGMEM up[] =         {UP_COMMA, KC_DOT, COMBO_END};
+// const uint16_t PROGMEM right[] =         {D_RIGHT, C_LEFT, COMBO_END};
+// const uint16_t PROGMEM left[] =        {KC_X, C_LEFT, COMBO_END};
 const uint16_t PROGMEM up[] =           {KC_H, KC_COMM, COMBO_END};
 const uint16_t PROGMEM down[] =         {KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM left[] =         {KC_C, KC_D, COMBO_END};
-const uint16_t PROGMEM right[] =        {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM right[] =         {KC_C, KC_D, COMBO_END};
+const uint16_t PROGMEM left[] =        {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
+const uint16_t PROGMEM corchetes[]        = {KC_L, Y_OR_, COMBO_END};
+const uint16_t PROGMEM parentesis[]        = {KC_W, KC_P, COMBO_END};
+// const uint16_t PROGMEM p_cuadrados[]        = {KC_G, KC_M, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
     [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
     [CLOSE_BUFF] = COMBO_ACTION(close_buffer), [UP] = COMBO_ACTION(up),[DOWN] = COMBO_ACTION(down),[LEFT] = COMBO_ACTION(left), [RIGHT] = COMBO_ACTION(right),
-    [EMAIL]= COMBO_ACTION(email),
+    [EMAIL]= COMBO_ACTION(email),[CORCHETES]= COMBO_ACTION(corchetes),[PARENTESIS]= COMBO_ACTION(parentesis),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -129,25 +139,47 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         case UP: {
             if (pressed){
-                tap_code16(KC_UP);
+                register_code16(KC_UP);
+            } else {
+                unregister_code16(KC_UP);
             }
             break;
         }
         case DOWN: {
             if (pressed){
-                tap_code16(KC_DOWN);
+                register_code16(KC_DOWN);
+            } else {
+                unregister_code16(KC_DOWN);
             }
             break;
         }
         case LEFT: {
             if (pressed){
-                tap_code16(KC_LEFT);
+                register_code16(KC_LEFT);
+            } else {
+                unregister_code16(KC_LEFT);
             }
             break;
         }
         case RIGHT: {
             if (pressed){
-                tap_code16(KC_RIGHT);
+                register_code16(KC_RIGHT);
+            } else {
+                unregister_code16(KC_RIGHT);
+            }
+            break;
+        }
+        case CORCHETES: {
+            if (pressed){
+                SEND_STRING("{}");
+                tap_code16(KC_LEFT);
+            }
+            break;
+        }
+        case PARENTESIS: {
+            if (pressed){
+                SEND_STRING("()");
+                tap_code16(KC_LEFT);
             }
             break;
         }
@@ -171,7 +203,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       // KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, COMMA_UP, KC_DOT, KC_SLSH,
+       // KC_Z,    KC_X,   C_LEFT, D_RIGHT,    KC_V,                    KC_K, H_DOWN, UP_COMMA, KC_DOT, KC_SLSH,
        KC_Z,    KC_X,   KC_C, KC_D,    KC_V,                         KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
         LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                           LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
@@ -257,7 +289,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             return process_tap_or_long_press_key(record, KC_MINS);
         case H_DOWN: // Comma on tap, Ctrl+C on long press.
             return process_tap_or_long_press_key(record, KC_DOWN);
-        case COMMA_UP: // Comma on tap, Ctrl+C on long press.
+        case UP_COMMA: // Comma on tap, Ctrl+C on long press.
             return process_tap_or_long_press_key(record, KC_UP);
         case D_RIGHT: // Comma on tap, Ctrl+C on long press.
             return process_tap_or_long_press_key(record, KC_RIGHT);
