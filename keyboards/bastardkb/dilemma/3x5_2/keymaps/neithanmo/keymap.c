@@ -56,6 +56,8 @@ enum keymap_layers {
 #define C_LEFT LT(0, KC_C)
 #define D_RIGHT LT(0, KC_D)
 
+#define HYPER_COMMA RCAG_T(KC_COMM)
+
 // combos
 enum combo_events {
     ESC,
@@ -74,6 +76,7 @@ enum combo_events {
     PAGE_UP,
     PAGE_DOWN,
     EMAIL,
+    BACKSPACE,
     // ENE,
     COMBO_LENGTH
 };
@@ -99,15 +102,30 @@ const uint16_t PROGMEM p_cuadrados[]        = {KC_Q, KC_B, COMBO_END};
 const uint16_t PROGMEM page_up[]        = {LCTL_S, RSFT_N, COMBO_END};
 const uint16_t PROGMEM page_down[]        = {LCTL_S, RALT_I, COMBO_END};
 const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
+const uint16_t PROGMEM backspace[]    = {KC_W, Y_OR_, COMBO_END};
 // const uint16_t PROGMEM ene[] =         {KC_COMM, KC_DOT, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-    [ESC] = COMBO_ACTION(esc_combo), [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev),
-    [CLOSE_BUFF] = COMBO_ACTION(close_buffer), [UP] = COMBO_ACTION(up),[DOWN] = COMBO_ACTION(down),[LEFT] = COMBO_ACTION(left), [RIGHT] = COMBO_ACTION(right),
-    [EMAIL]= COMBO_ACTION(email),[CORCHETES]= COMBO_ACTION(corchetes),[P_CUADRADOS]= COMBO_ACTION(p_cuadrados),[PARENTESIS]= COMBO_ACTION(parentesis),[PAGE_UP]= COMBO_ACTION(page_up),[PAGE_DOWN]= COMBO_ACTION(page_down),
-    // [ENE]= COMBO_ACTION(ene),
+    [ESC] = COMBO_ACTION(esc_combo),
+    [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)),
+    [CAPS_LOCK] = COMBO_ACTION(caps_word),
+    [BUFF_NEXT] = COMBO_ACTION(buffer_next),
+    [BUFF_PREV] = COMBO_ACTION(buffer_prev),
+    [CLOSE_BUFF] = COMBO_ACTION(close_buffer),
+    [UP] = COMBO_ACTION(up),
+    [DOWN] = COMBO_ACTION(down),
+    [LEFT] = COMBO_ACTION(left),
+    [RIGHT] = COMBO_ACTION(right),
+    [EMAIL] = COMBO_ACTION(email),
+    [CORCHETES] = COMBO_ACTION(corchetes),
+    [P_CUADRADOS] = COMBO_ACTION(p_cuadrados),
+    [PARENTESIS] = COMBO_ACTION(parentesis),
+    [PAGE_UP] = COMBO_ACTION(page_up),
+    [PAGE_DOWN] = COMBO_ACTION(page_down),
+    [BACKSPACE] = COMBO_ACTION(backspace),
+    // [ENE] = COMBO_ACTION(ene),
 };
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -220,6 +238,14 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
         }
+        case BACKSPACE: {
+            if (pressed){
+                register_code16(KC_BSPC);
+            } else {
+                unregister_code16(KC_BSPC);
+            }
+            break;
+        }
         // case ENE: {
         //     if (pressed) {
         //         SEND_STRING("ñ");
@@ -240,7 +266,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       KC_Z,    KC_X,   KC_C, KC_D,    KC_V,                         KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH,
+       KC_Z,    KC_X,   KC_C, KC_D,    KC_V,                         KC_K, KC_H, HYPER_COMMA, KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
         LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                           LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
   // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────────╯
