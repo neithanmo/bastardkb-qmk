@@ -55,6 +55,9 @@ enum keymap_layers {
 #define UP_COMMA LT(0, KC_COMM)
 #define C_LEFT LT(0, KC_C)
 #define D_RIGHT LT(0, KC_D)
+#define L_LBRC LT(0, KC_L)
+#define U_RBRC LT(0, KC_U)
+
 
 #define HYPER_COMMA RCAG_T(KC_COMM)
 
@@ -262,7 +265,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_BASE] = LAYOUT_split_3x5_2(
   // ╭───────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
-       KC_Q,    KC_W,   KC_F,   KC_P,       KC_B,                    KC_J, KC_L,   KC_U,     Y_OR_,  KC_SCLN,
+       KC_Q,    KC_W,   KC_F,   KC_P,       KC_B,                    KC_J, L_LBRC,   U_RBRC,     Y_OR_,  KC_SCLN,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
        KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
@@ -357,6 +360,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             return process_tap_or_long_press_key(record, KC_RIGHT);
         case C_LEFT: // Comma on tap, Ctrl+C on long press.
             return process_tap_or_long_press_key(record, KC_LEFT);
+        case L_LBRC: // Comma on tap, Ctrl+C on long press.
+            return process_tap_or_long_press_key(record, KC_LBRC);
+        case U_RBRC: // Comma on tap, Ctrl+C on long press.
+            return process_tap_or_long_press_key(record, KC_RBRC);
     }
 
     return true;
