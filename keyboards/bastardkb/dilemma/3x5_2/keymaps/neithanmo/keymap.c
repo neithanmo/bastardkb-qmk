@@ -51,20 +51,16 @@ enum keymap_layers {
 // tap-hold
 #define Y_OR_ LT(0, KC_Y)
 #define O_MINS LT(0, KC_O)
-#define H_DOWN LT(0, KC_H)
-#define UP_COMMA LT(0, KC_COMM)
-#define C_LEFT LT(0, KC_C)
-#define D_RIGHT LT(0, KC_D)
 #define L_LBRC LT(0, KC_L)
 #define U_RBRC LT(0, KC_U)
+// KC_SCLN or KC_EXLM
+#define KC_SCLN_EXLM LT(0, KC_SCLN)
 
-
-#define HYPER_COMMA RCAG_T(KC_COMM)
+// #define HYPER_COMMA RCAG_T(KC_COMM)
 
 // combos
 enum combo_events {
     ESC,
-    NAV,
     CAPS_LOCK,
     BUFF_NEXT,
     BUFF_PREV,
@@ -80,39 +76,41 @@ enum combo_events {
     PAGE_DOWN,
     EMAIL,
     BACKSPACE,
+    EQUALS,
+    ASTERIC,
+    CONTROL_TAB,
     // ENE,
     COMBO_LENGTH
 };
 
 const uint16_t PROGMEM esc_combo[]    = {LCTL_S, RCTL_E, COMBO_END};
-const uint16_t PROGMEM to_nav_combo[] = {C_LEFT, UP_COMMA, COMBO_END};
 const uint16_t PROGMEM buffer_prev[]  = {LALT_R, LS_T, COMBO_END};
 const uint16_t PROGMEM buffer_next[]  = {RALT_I, RSFT_N, COMBO_END};
-const uint16_t PROGMEM caps_word[]    = {KC_F, KC_U, COMBO_END};
+const uint16_t PROGMEM caps_word[]    = {KC_F, U_RBRC, COMBO_END};
 const uint16_t PROGMEM close_buffer[] = {KC_H, KC_DOT, COMBO_END};
 
-// const uint16_t PROGMEM down[] =           {KC_H, KC_COMM, COMBO_END};
-// const uint16_t PROGMEM up[] =         {KC_COMM, KC_DOT, COMBO_END};
-// const uint16_t PROGMEM right[] =         {KC_C, KC_D, COMBO_END};
-// const uint16_t PROGMEM left[] =        {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM left[] =           {LALT_R, LCTL_S, COMBO_END};
 const uint16_t PROGMEM right[] =         {LCTL_S, LS_T, COMBO_END};
 const uint16_t PROGMEM up[] =         {RCTL_E, RALT_I, COMBO_END};
 const uint16_t PROGMEM down[] =        {RSFT_N, RCTL_E, COMBO_END};
-const uint16_t PROGMEM corchetes[]        = {KC_L, Y_OR_, COMBO_END};
+const uint16_t PROGMEM corchetes[]        = {L_LBRC, Y_OR_, COMBO_END};
 const uint16_t PROGMEM parentesis[]        = {KC_W, KC_P, COMBO_END};
 const uint16_t PROGMEM p_cuadrados[]        = {KC_Q, KC_B, COMBO_END};
 const uint16_t PROGMEM page_up[]        = {LCTL_S, RSFT_N, COMBO_END};
 const uint16_t PROGMEM page_down[]        = {LCTL_S, RALT_I, COMBO_END};
 const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
-const uint16_t PROGMEM backspace[]    = {KC_W, Y_OR_, COMBO_END};
+const uint16_t PROGMEM backspace_combo[] = {U_RBRC, Y_OR_, COMBO_END}; // Use right pinky and ring finger
+const uint16_t PROGMEM equals_combo[] = {KC_W, KC_F, COMBO_END}; // for = symbol
+const uint16_t PROGMEM asteric_combo[] = {LS_T, KC_G, COMBO_END}; // for * symbol
+// Could be removed once we upgrate to the dilemma
+// with encoders(two, one for maybe navigating windows, and up/down scrolling?)
+const uint16_t PROGMEM control_tab[]        = {KC_W, Y_OR_, COMBO_END};
 // const uint16_t PROGMEM ene[] =         {KC_COMM, KC_DOT, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
     [ESC] = COMBO_ACTION(esc_combo),
-    [NAV] = COMBO(to_nav_combo, TO(LAYER_BASE)),
     [CAPS_LOCK] = COMBO_ACTION(caps_word),
     [BUFF_NEXT] = COMBO_ACTION(buffer_next),
     [BUFF_PREV] = COMBO_ACTION(buffer_prev),
@@ -127,7 +125,10 @@ combo_t key_combos[] = {
     [PARENTESIS] = COMBO_ACTION(parentesis),
     [PAGE_UP] = COMBO_ACTION(page_up),
     [PAGE_DOWN] = COMBO_ACTION(page_down),
-    [BACKSPACE] = COMBO_ACTION(backspace),
+    [BACKSPACE] = COMBO_ACTION(backspace_combo),
+    [EQUALS] = COMBO_ACTION(equals_combo),
+    [ASTERIC] = COMBO_ACTION(asteric_combo),
+    [CONTROL_TAB] = COMBO_ACTION(control_tab),
     // [ENE] = COMBO_ACTION(ene),
 };
 
@@ -249,6 +250,32 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
         }
+        case EQUALS: {
+            if (pressed){
+                register_code16(KC_EQUAL);
+            } else {
+                unregister_code16(KC_EQUAL);
+            }
+            break;
+        }
+        case ASTERIC: {
+            if (pressed){
+                register_code16(KC_ASTR);
+            } else {
+                unregister_code16(KC_ASTR);
+            }
+            break;
+        }
+        case CONTROL_TAB: {
+            if (pressed) {
+                register_code(KC_RCTL);  // Press rigth control
+                register_code(KC_TAB);   // Press Tab while holding Alt
+            } else {
+                unregister_code(KC_TAB); // Release Tab first
+                register_code(KC_RCTL);  // Release right control
+            }
+            break;
+        }
         // case ENE: {
         //     if (pressed) {
         //         SEND_STRING("ñ");
@@ -265,11 +292,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_BASE] = LAYOUT_split_3x5_2(
   // ╭───────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
-       KC_Q,    KC_W,   KC_F,   KC_P,       KC_B,                    KC_J, L_LBRC,   U_RBRC,     Y_OR_,  KC_SCLN,
+       KC_Q,    KC_W,   KC_F,   KC_P,       KC_B,                    KC_J, L_LBRC,   U_RBRC,     Y_OR_,  KC_SCLN_EXLM,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N, RCTL_E,   RALT_I, O_MINS,
+       KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N,   RCTL_E,     RALT_I, O_MINS,
   // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       KC_Z,    KC_X,   KC_C, KC_D,    KC_V,                         KC_K, KC_H, HYPER_COMMA, KC_DOT, KC_SLSH,
+       KC_Z,    KC_X,   KC_C,   KC_D,    KC_V,                       KC_K, KC_H,     KC_COMM,    KC_DOT, KC_SLSH,
   // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
         LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                           LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
   // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────────╯
@@ -346,27 +373,22 @@ static bool process_tap_or_long_press_key(keyrecord_t* record, uint16_t long_pre
     return true; // Continue default handling.
 }
 
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case Y_OR_: // Y on tap and _ on long press.
             return process_tap_or_long_press_key(record, KC_UNDS);
-        case O_MINS: // Comma on tap, Ctrl+C on long press.
+        case O_MINS:
             return process_tap_or_long_press_key(record, KC_MINS);
-        case H_DOWN: // Comma on tap, Ctrl+C on long press.
-            return process_tap_or_long_press_key(record, KC_DOWN);
-        case UP_COMMA: // Comma on tap, Ctrl+C on long press.
-            return process_tap_or_long_press_key(record, KC_UP);
-        case D_RIGHT: // Comma on tap, Ctrl+C on long press.
-            return process_tap_or_long_press_key(record, KC_RIGHT);
-        case C_LEFT: // Comma on tap, Ctrl+C on long press.
-            return process_tap_or_long_press_key(record, KC_LEFT);
-        case L_LBRC: // Comma on tap, Ctrl+C on long press.
+        case L_LBRC:
             return process_tap_or_long_press_key(record, KC_LBRC);
-        case U_RBRC: // Comma on tap, Ctrl+C on long press.
+        case U_RBRC:
             return process_tap_or_long_press_key(record, KC_RBRC);
+        case KC_SCLN_EXLM:
+            return process_tap_or_long_press_key(record, KC_EXLM);
+        default:
+            return true;
     }
-
-    return true;
 }
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
