@@ -78,7 +78,7 @@ enum combo_events {
     BACKSPACE,
     EQUALS,
     ASTERIC,
-    CONTROL_TAB,
+    DEL,
     // ENE,
     COMBO_LENGTH
 };
@@ -86,7 +86,8 @@ enum combo_events {
 const uint16_t PROGMEM esc_combo[]    = {LCTL_S, RCTL_E, COMBO_END};
 const uint16_t PROGMEM buffer_prev[]  = {LALT_R, LS_T, COMBO_END};
 const uint16_t PROGMEM buffer_next[]  = {RALT_I, RSFT_N, COMBO_END};
-const uint16_t PROGMEM caps_word[]    = {KC_F, U_RBRC, COMBO_END};
+// const uint16_t PROGMEM caps_word[]    = {KC_F, U_RBRC, COMBO_END};
+const uint16_t PROGMEM caps_word[]        = {KC_W, Y_OR_, COMBO_END};
 const uint16_t PROGMEM close_buffer[] = {KC_H, KC_DOT, COMBO_END};
 
 const uint16_t PROGMEM left[] =           {LALT_R, LCTL_S, COMBO_END};
@@ -99,12 +100,10 @@ const uint16_t PROGMEM p_cuadrados[]        = {KC_Q, KC_B, COMBO_END};
 const uint16_t PROGMEM page_up[]        = {LCTL_S, RSFT_N, COMBO_END};
 const uint16_t PROGMEM page_down[]        = {LCTL_S, RALT_I, COMBO_END};
 const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
+const uint16_t PROGMEM equals_combo[] = {KC_X, KC_C, COMBO_END}; // for * symbol
 const uint16_t PROGMEM backspace_combo[] = {U_RBRC, Y_OR_, COMBO_END}; // Use right pinky and ring finger
-const uint16_t PROGMEM equals_combo[] = {KC_W, KC_F, COMBO_END}; // for = symbol
 const uint16_t PROGMEM asteric_combo[] = {LS_T, KC_G, COMBO_END}; // for * symbol
-// Could be removed once we upgrate to the dilemma
-// with encoders(two, one for maybe navigating windows, and up/down scrolling?)
-const uint16_t PROGMEM control_tab[]        = {KC_W, Y_OR_, COMBO_END};
+const uint16_t PROGMEM del_combo[] = {KC_W, KC_F, COMBO_END}; // for = symbol
 // const uint16_t PROGMEM ene[] =         {KC_COMM, KC_DOT, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
@@ -128,7 +127,7 @@ combo_t key_combos[] = {
     [BACKSPACE] = COMBO_ACTION(backspace_combo),
     [EQUALS] = COMBO_ACTION(equals_combo),
     [ASTERIC] = COMBO_ACTION(asteric_combo),
-    [CONTROL_TAB] = COMBO_ACTION(control_tab),
+    [DEL] = COMBO(del_combo, KC_DEL),
     // [ENE] = COMBO_ACTION(ene),
 };
 
@@ -263,16 +262,6 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 register_code16(KC_ASTR);
             } else {
                 unregister_code16(KC_ASTR);
-            }
-            break;
-        }
-        case CONTROL_TAB: {
-            if (pressed) {
-                register_code(KC_RCTL);  // Press rigth control
-                register_code(KC_TAB);   // Press Tab while holding Alt
-            } else {
-                unregister_code(KC_TAB); // Release Tab first
-                register_code(KC_RCTL);  // Release right control
             }
             break;
         }
