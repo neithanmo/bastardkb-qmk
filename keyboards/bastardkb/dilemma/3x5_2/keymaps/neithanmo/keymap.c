@@ -79,6 +79,7 @@ enum combo_events {
     EQUALS,
     ASTERIC,
     DEL,
+    ALT_TAB,
     // ENE,
     COMBO_LENGTH
 };
@@ -104,6 +105,7 @@ const uint16_t PROGMEM equals_combo[] = {KC_X, KC_C, COMBO_END}; // for * symbol
 const uint16_t PROGMEM backspace_combo[] = {U_RBRC, Y_OR_, COMBO_END}; // Use right pinky and ring finger
 const uint16_t PROGMEM asteric_combo[] = {LS_T, KC_G, COMBO_END}; // for * symbol
 const uint16_t PROGMEM del_combo[] = {KC_W, KC_F, COMBO_END}; // for = symbol
+const uint16_t PROGMEM alt_tab_combo[] = {U_RBRC, KC_F, COMBO_END}; // for = alt+tab
 // const uint16_t PROGMEM ene[] =         {KC_COMM, KC_DOT, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
@@ -128,8 +130,11 @@ combo_t key_combos[] = {
     [EQUALS] = COMBO_ACTION(equals_combo),
     [ASTERIC] = COMBO_ACTION(asteric_combo),
     [DEL] = COMBO(del_combo, KC_DEL),
+    [ALT_TAB] = COMBO(alt_tab_combo, KC_NO),
     // [ENE] = COMBO_ACTION(ene),
 };
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch (combo_index) {
@@ -251,7 +256,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         case EQUALS: {
             if (pressed){
-                register_code16(KC_EQUAL);
+            register_code16(KC_EQUAL);
             } else {
                 unregister_code16(KC_EQUAL);
             }
@@ -265,6 +270,18 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             }
             break;
         }
+        case ALT_TAB:
+            if (pressed) {
+                if (!is_alt_tab_active) {
+                is_alt_tab_active = true;
+                register_code(KC_LALT);
+                }
+                alt_tab_timer = timer_read();
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            break;
         // case ENE: {
         //     if (pressed) {
         //         SEND_STRING("ñ");
@@ -276,7 +293,15 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     }
 }
 
-// clang-format off
+void matrix_scan_user(void) { // The very important timer.
+  if (is_alt_tab_active) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
+      unregister_code(KC_LALT);
+      is_alt_tab_active = false;
+    }
+  }
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_BASE] = LAYOUT_split_3x5_2(
