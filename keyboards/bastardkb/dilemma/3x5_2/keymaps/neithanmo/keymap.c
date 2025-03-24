@@ -48,6 +48,9 @@ enum keymap_layers {
 #define RCTL_E RCTL_T(KC_E)
 #define LS_T LSFT_T(KC_T)
 #define RSFT_N RSFT_T(KC_N)
+#define RSUPER LGUI_T(KC_COMM)
+#define LSUPER LGUI_T(KC_C)
+
 // tap-hold
 #define Y_OR_ LT(0, KC_Y)
 #define O_MINS LT(0, KC_O)
@@ -76,7 +79,6 @@ enum combo_events {
     PAGE_DOWN,
     EMAIL,
     BACKSPACE,
-    EQUALS,
     ASTERIC,
     DEL,
     ALT_TAB,
@@ -84,57 +86,38 @@ enum combo_events {
     COMBO_LENGTH
 };
 
-const uint16_t PROGMEM esc_combo[]    = {LCTL_S, RCTL_E, COMBO_END};
-const uint16_t PROGMEM buffer_prev[]  = {LALT_R, LS_T, COMBO_END};
-const uint16_t PROGMEM buffer_next[]  = {RALT_I, RSFT_N, COMBO_END};
+const uint16_t PROGMEM esc_combo[]   = {LCTL_S, RCTL_E, COMBO_END};
+const uint16_t PROGMEM buffer_prev[] = {LALT_R, LS_T, COMBO_END};
+const uint16_t PROGMEM buffer_next[] = {RALT_I, RSFT_N, COMBO_END};
 // const uint16_t PROGMEM caps_word[]    = {KC_F, U_RBRC, COMBO_END};
-const uint16_t PROGMEM caps_word[]        = {KC_W, Y_OR_, COMBO_END};
+const uint16_t PROGMEM caps_word[]    = {KC_W, Y_OR_, COMBO_END};
 const uint16_t PROGMEM close_buffer[] = {KC_H, KC_DOT, COMBO_END};
 
-const uint16_t PROGMEM left[] =           {LALT_R, LCTL_S, COMBO_END};
-const uint16_t PROGMEM right[] =         {LCTL_S, LS_T, COMBO_END};
-const uint16_t PROGMEM up[] =         {RCTL_E, RALT_I, COMBO_END};
-const uint16_t PROGMEM down[] =        {RSFT_N, RCTL_E, COMBO_END};
-const uint16_t PROGMEM corchetes[]        = {L_LBRC, Y_OR_, COMBO_END};
-const uint16_t PROGMEM parentesis[]        = {KC_W, KC_P, COMBO_END};
-const uint16_t PROGMEM p_cuadrados[]        = {KC_Q, KC_B, COMBO_END};
-const uint16_t PROGMEM page_up[]        = {LCTL_S, RSFT_N, COMBO_END};
-const uint16_t PROGMEM page_down[]        = {LCTL_S, RALT_I, COMBO_END};
-const uint16_t PROGMEM email[]        = {KC_G, KC_M, COMBO_END};
-const uint16_t PROGMEM equals_combo[] = {KC_X, KC_C, COMBO_END}; // for * symbol
+const uint16_t PROGMEM left[]        = {LALT_R, LCTL_S, COMBO_END};
+const uint16_t PROGMEM right[]       = {LCTL_S, LS_T, COMBO_END};
+const uint16_t PROGMEM up[]          = {RCTL_E, RALT_I, COMBO_END};
+const uint16_t PROGMEM down[]        = {RSFT_N, RCTL_E, COMBO_END};
+const uint16_t PROGMEM corchetes[]   = {L_LBRC, Y_OR_, COMBO_END};
+const uint16_t PROGMEM parentesis[]  = {KC_W, KC_P, COMBO_END};
+const uint16_t PROGMEM p_cuadrados[] = {KC_Q, KC_B, COMBO_END};
+const uint16_t PROGMEM page_up[]     = {LCTL_S, RSFT_N, COMBO_END};
+const uint16_t PROGMEM page_down[]   = {LCTL_S, RALT_I, COMBO_END};
+const uint16_t PROGMEM email[]       = {KC_G, KC_M, COMBO_END};
+// const uint16_t PROGMEM equals_combo[] = {KC_X, KC_C, COMBO_END}; // for * symbol
 const uint16_t PROGMEM backspace_combo[] = {U_RBRC, Y_OR_, COMBO_END}; // Use right pinky and ring finger
-const uint16_t PROGMEM asteric_combo[] = {LS_T, KC_G, COMBO_END}; // for * symbol
-const uint16_t PROGMEM del_combo[] = {KC_W, KC_F, COMBO_END}; // for = symbol
-const uint16_t PROGMEM alt_tab_combo[] = {U_RBRC, KC_F, COMBO_END}; // for = alt+tab
+const uint16_t PROGMEM asteric_combo[]   = {LS_T, KC_G, COMBO_END};    // for * symbol
+const uint16_t PROGMEM del_combo[]       = {KC_W, KC_F, COMBO_END};    // for = symbol
+const uint16_t PROGMEM alt_tab_combo[]   = {U_RBRC, KC_F, COMBO_END};  // for = alt+tab
 // const uint16_t PROGMEM ene[] =         {KC_COMM, KC_DOT, COMBO_END};
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 combo_t key_combos[] = {
-    [ESC] = COMBO_ACTION(esc_combo),
-    [CAPS_LOCK] = COMBO_ACTION(caps_word),
-    [BUFF_NEXT] = COMBO_ACTION(buffer_next),
-    [BUFF_PREV] = COMBO_ACTION(buffer_prev),
-    [CLOSE_BUFF] = COMBO_ACTION(close_buffer),
-    [UP] = COMBO_ACTION(up),
-    [DOWN] = COMBO_ACTION(down),
-    [LEFT] = COMBO_ACTION(left),
-    [RIGHT] = COMBO_ACTION(right),
-    [EMAIL] = COMBO_ACTION(email),
-    [CORCHETES] = COMBO_ACTION(corchetes),
-    [P_CUADRADOS] = COMBO_ACTION(p_cuadrados),
-    [PARENTESIS] = COMBO_ACTION(parentesis),
-    [PAGE_UP] = COMBO_ACTION(page_up),
-    [PAGE_DOWN] = COMBO_ACTION(page_down),
-    [BACKSPACE] = COMBO_ACTION(backspace_combo),
-    [EQUALS] = COMBO_ACTION(equals_combo),
-    [ASTERIC] = COMBO_ACTION(asteric_combo),
-    [DEL] = COMBO(del_combo, KC_DEL),
-    [ALT_TAB] = COMBO(alt_tab_combo, KC_NO),
+    [ESC] = COMBO_ACTION(esc_combo), [CAPS_LOCK] = COMBO_ACTION(caps_word), [BUFF_NEXT] = COMBO_ACTION(buffer_next), [BUFF_PREV] = COMBO_ACTION(buffer_prev), [CLOSE_BUFF] = COMBO_ACTION(close_buffer), [UP] = COMBO_ACTION(up), [DOWN] = COMBO_ACTION(down), [LEFT] = COMBO_ACTION(left), [RIGHT] = COMBO_ACTION(right), [EMAIL] = COMBO_ACTION(email), [CORCHETES] = COMBO_ACTION(corchetes), [P_CUADRADOS] = COMBO_ACTION(p_cuadrados), [PARENTESIS] = COMBO_ACTION(parentesis), [PAGE_UP] = COMBO_ACTION(page_up), [PAGE_DOWN] = COMBO_ACTION(page_down), [BACKSPACE] = COMBO_ACTION(backspace_combo), [ASTERIC] = COMBO_ACTION(asteric_combo), [DEL] = COMBO(del_combo, KC_DEL), [ALT_TAB] = COMBO(alt_tab_combo, KC_NO),
     // [ENE] = COMBO_ACTION(ene),
 };
-bool is_alt_tab_active = false;
-uint16_t alt_tab_timer = 0;
+bool     is_alt_tab_active = false;
+uint16_t alt_tab_timer     = 0;
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch (combo_index) {
@@ -172,7 +155,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         }
         case UP: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_UP);
             } else {
                 unregister_code16(KC_UP);
@@ -180,7 +163,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         }
         case DOWN: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_DOWN);
             } else {
                 unregister_code16(KC_DOWN);
@@ -188,7 +171,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         }
         case LEFT: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_LEFT);
             } else {
                 unregister_code16(KC_LEFT);
@@ -196,7 +179,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         }
         case RIGHT: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_RIGHT);
             } else {
                 unregister_code16(KC_RIGHT);
@@ -204,28 +187,28 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         }
         case CORCHETES: {
-            if (pressed){
+            if (pressed) {
                 SEND_STRING("{}");
                 tap_code16(KC_LEFT);
             }
             break;
         }
         case PARENTESIS: {
-            if (pressed){
+            if (pressed) {
                 SEND_STRING("()");
                 tap_code16(KC_LEFT);
             }
             break;
         }
         case P_CUADRADOS: {
-            if (pressed){
+            if (pressed) {
                 SEND_STRING("[]");
                 tap_code16(KC_LEFT);
             }
             break;
         }
         case PAGE_DOWN: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_PAGE_DOWN);
             } else {
                 unregister_code16(KC_PAGE_DOWN);
@@ -233,7 +216,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         }
         case PAGE_UP: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_PAGE_UP);
             } else {
                 unregister_code16(KC_PAGE_UP);
@@ -241,29 +224,21 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             break;
         }
         case EMAIL: {
-            if (pressed){
+            if (pressed) {
                 SEND_STRING("neithanmo@gmail.com");
             }
             break;
         }
         case BACKSPACE: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_BSPC);
             } else {
                 unregister_code16(KC_BSPC);
             }
             break;
         }
-        case EQUALS: {
-            if (pressed){
-            register_code16(KC_EQUAL);
-            } else {
-                unregister_code16(KC_EQUAL);
-            }
-            break;
-        }
         case ASTERIC: {
-            if (pressed){
+            if (pressed) {
                 register_code16(KC_ASTR);
             } else {
                 unregister_code16(KC_ASTR);
@@ -273,8 +248,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case ALT_TAB:
             if (pressed) {
                 if (!is_alt_tab_active) {
-                is_alt_tab_active = true;
-                register_code(KC_LALT);
+                    is_alt_tab_active = true;
+                    register_code(KC_LALT);
                 }
                 alt_tab_timer = timer_read();
                 register_code(KC_TAB);
@@ -294,75 +269,75 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 }
 
 void matrix_scan_user(void) { // The very important timer.
-  if (is_alt_tab_active) {
-    if (timer_elapsed(alt_tab_timer) > 1000) {
-      unregister_code(KC_LALT);
-      is_alt_tab_active = false;
+    if (is_alt_tab_active) {
+        if (timer_elapsed(alt_tab_timer) > 1000) {
+            unregister_code(KC_LALT);
+            is_alt_tab_active = false;
+        }
     }
-  }
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [LAYER_BASE] = LAYOUT_split_3x5_2(
-  // ╭───────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
-       KC_Q,    KC_W,   KC_F,   KC_P,       KC_B,                    KC_J, L_LBRC,   U_RBRC,     Y_OR_,  KC_SCLN_EXLM,
-  // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       KC_A,    LALT_R, LCTL_S, LS_T,    KC_G,                       KC_M, RSFT_N,   RCTL_E,     RALT_I, O_MINS,
-  // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
-       KC_Z,    KC_X,   KC_C,   KC_D,    KC_V,                       KC_K, KC_H,     KC_COMM,    KC_DOT, KC_SLSH,
-  // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
-        LT(LAYER_NUM, KC_ENT),  LT(LAYER_SYM, KC_TAB),                           LWIN_T(KC_BSPC), LT(LAYER_SYM,KC_SPC)
-  // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────────╯
-  ),
+    [LAYER_BASE] = LAYOUT_split_3x5_2(
+        // ╭───────────────────────────────────────────────────────────╮ ╭───────────────────────────────────────────────────────────────────────────────╮
+        KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, L_LBRC, U_RBRC, Y_OR_, KC_SCLN_EXLM,
+        // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
+        KC_A, LALT_R, LCTL_S, LS_T, KC_G, KC_M, RSFT_N, RCTL_E, RALT_I, O_MINS,
+        // ├───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────┤
+        KC_Z, KC_X, LSUPER, KC_D, KC_V, KC_K, KC_H, RSUPER, KC_DOT, KC_SLSH,
+        // ╰───────────────────────────────────────────────────────────┤ ├───────────────────────────────────────────────────────────────────────────────╯
+        LT(LAYER_NUM, KC_ENT), LT(LAYER_SYM, KC_TAB), LWIN_T(KC_BSPC), LT(LAYER_SYM, KC_SPC)
+        // ╰───────────────────────────────────────────────────────╯                  ╰────────────────────────────────────────╯
+        ),
 
-  [LAYER_SYM] = LAYOUT_split_3x5_2(
-  // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
-       KC_BSPC, KC_AT, KC_HASH, KC_DLR, KC_PERC,        KC_LBRC,    KC_LPRN,    KC_RPRN, KC_RBRC, KC_BSPC,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
-       KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS,     KC_AMPR,    KC_LCBR,    KC_RCBR, KC_ASTR, KC_ENT,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
-       KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE,     KC_CIRC,    KC_DOWN,    KC_UP,   KC_EXLM, MO(LAYER_FUN),
-  // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
-        KC_BSPC, XXXXXXX,                                   KC_DEL, XXXXXXX
-  //    ╰───────────────────────────╯                     ╰──────────────────╯
-  ),
+    [LAYER_SYM] = LAYOUT_split_3x5_2(
+        // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────────────╮
+        KC_BSPC, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_LBRC, KC_LPRN, KC_RPRN, KC_RBRC, KC_BSPC,
+        // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
+        KC_TAB, KC_PEQL, KC_DQUO, KC_QUOT, KC_BSLS, KC_AMPR, KC_LCBR, KC_RCBR, KC_ASTR, KC_ENT,
+        // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────┤
+        KC_TILD, KC_GRV, KC_LEFT, KC_RGHT, KC_PIPE, KC_CIRC, KC_DOWN, KC_UP, KC_EXLM, MO(LAYER_FUN),
+        // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────────────╯
+        KC_BSPC, XXXXXXX, KC_DEL, XXXXXXX
+        //    ╰───────────────────────────╯                     ╰──────────────────╯
+        ),
 
-  [LAYER_NAV] = LAYOUT_split_3x5_2(
-  // ╭─────────────────────────────────────────────╮ ╭────────────────────────────────────────────────────────────╮
-       KC_ESC, KC_WH_L, KC_PGUP, KC_PGDN, KC_WH_R,        XXXXXXX,  KC_UNDO, XXXXXXX, XXXXXXX, KC_BSPC,
-  // ├─────────────────────────────────────────────┤ ├    ────────────────────────────────────────────────────────────┤
-       KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX,        KC_CUT, KC_COPY, KC_PEGAR,  KC_REDO, KC_ENT,
-  // ├─────────────────────────────────────────────┤ ├    ────────────────────────────────────────────────────────────┤
-       XXXXXXX, KC_RCTL, KC_LEFT,  KC_RGHT, KC_DEL,       XXXXXXX, KC_DOWN, KC_UP,    KC_RALT, XXXXXXX,
-  // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
-           KC_BTN2, TO(LAYER_BASE),                         KC_LWIN, KC_ENT
-  //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
-  ),
+    [LAYER_NAV] = LAYOUT_split_3x5_2(
+        // ╭─────────────────────────────────────────────╮ ╭────────────────────────────────────────────────────────────╮
+        KC_ESC, KC_WH_L, KC_PGUP, KC_PGDN, KC_WH_R, XXXXXXX, KC_UNDO, XXXXXXX, XXXXXXX, KC_BSPC,
+        // ├─────────────────────────────────────────────┤ ├    ────────────────────────────────────────────────────────────┤
+        KC_TAB, KC_BTN1, KC_WH_U, KC_WH_D, XXXXXXX, KC_CUT, KC_COPY, KC_PEGAR, KC_REDO, KC_ENT,
+        // ├─────────────────────────────────────────────┤ ├    ────────────────────────────────────────────────────────────┤
+        XXXXXXX, KC_RCTL, KC_LEFT, KC_RGHT, KC_DEL, XXXXXXX, KC_DOWN, KC_UP, KC_RALT, XXXXXXX,
+        // ╰─────────────────────────────────────────────┤ ├────────────────────────────────────────────────────────────╯
+        KC_BTN2, TO(LAYER_BASE), KC_LWIN, KC_ENT
+        //     ╰───────────────────────────────────────╯       ╰──────────────────────╯
+        ),
 
-  [LAYER_NUM] = LAYOUT_split_3x5_2(
-  // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       KC_ESC, KC_MPRV, KC_MPLY, KC_MNXT, KC_UNDS,    KC_MINS, KC_7,    KC_8,    KC_9,    KC_BSPC,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_TAB,   KC_MUTE, KC_VOLU, KC_VOLD, KC_DOT,   KC_PEQL, KC_4,    KC_5,    KC_6,    KC_SPC,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_PSLS, KC_PAST, KC_BRIU,  KC_BRID, KC_PLUS,  KC_0,    KC_1,    KC_2,    KC_3,    KC_PLUS,
-  // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-             XXXXXXX, KC_ENT,                              KC_LALT,    KC_DOT
-  //        ╰───────────────────────────╯               ╰───────────────────────╯
-  ),
+    [LAYER_NUM] = LAYOUT_split_3x5_2(
+        // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
+        KC_ESC, KC_MPRV, KC_MPLY, KC_MNXT, KC_UNDS, KC_MINS, KC_7, KC_8, KC_9, KC_BSPC,
+        // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
+        KC_TAB, KC_MUTE, KC_VOLU, KC_VOLD, KC_DOT, KC_PEQL, KC_4, KC_5, KC_6, KC_SPC,
+        // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
+        KC_PSLS, KC_PAST, KC_BRIU, KC_BRID, KC_PLUS, KC_0, KC_1, KC_2, KC_3, KC_PLUS,
+        // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
+        XXXXXXX, KC_ENT, KC_LALT, KC_DOT
+        //        ╰───────────────────────────╯               ╰───────────────────────╯
+        ),
 
-  [LAYER_FUN] = LAYOUT_split_3x5_2(
-  // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       XXXXXXX, KC_F7, KC_F8, KC_F9, KC_PSCR,           XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       XXXXXXX, KC_F4, KC_F5, KC_F6,  QK_RBT,            XXXXXXX, KC_F10, KC_F11, KC_F12, XXXXXXX,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       XXXXXXX, KC_F1, KC_F2,  KC_F3,  XXXXXXX,         XXXXXXX, XXXXXXX, XXXXXXX,XXXXXXX, XXXXXXX,
-  // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-            TO(LAYER_BASE), XXXXXXX,                        XXXXXXX, XXXXXXX
-  //      ╰───────────────────────────────────╯          ╰───────────────────────────────╯
-  ),
+    [LAYER_FUN] = LAYOUT_split_3x5_2(
+        // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
+        XXXXXXX, KC_F7, KC_F8, KC_F9, KC_PSCR, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
+        XXXXXXX, KC_F4, KC_F5, KC_F6, QK_RBT, XXXXXXX, KC_F10, KC_F11, KC_F12, XXXXXXX,
+        // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
+        XXXXXXX, KC_F1, KC_F2, KC_F3, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
+        TO(LAYER_BASE), XXXXXXX, XXXXXXX, XXXXXXX
+        //      ╰───────────────────────────────────╯          ╰───────────────────────────────╯
+        ),
 };
 
 // clang-format on
@@ -386,7 +361,6 @@ static bool process_tap_or_long_press_key(keyrecord_t* record, uint16_t long_pre
     }
     return true; // Continue default handling.
 }
-
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
