@@ -270,7 +270,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
 
 void matrix_scan_user(void) { // The very important timer.
     if (is_alt_tab_active) {
-        if (timer_elapsed(alt_tab_timer) > 1000) {
+        if (timer_elapsed(alt_tab_timer) > 700) {
             unregister_code(KC_LALT);
             is_alt_tab_active = false;
         }
