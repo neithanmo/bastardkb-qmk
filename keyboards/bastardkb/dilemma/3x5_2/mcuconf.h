@@ -17,7 +17,10 @@
 
 #pragma once
 
-#include_next <mcuconf.h>
+// Pull in the RP2040 board configuration explicitly to ensure
+// RP2040_MCUCONF and required RP_* settings are defined.
+#include "../../../platforms/chibios/boards/QMK_PM2040/configs/mcuconf.h"
 
+// Enable SPI1 for the Cirque trackpad on Dilemma assembled variant.
 #undef RP_SPI_USE_SPI1
 #define RP_SPI_USE_SPI1 TRUE

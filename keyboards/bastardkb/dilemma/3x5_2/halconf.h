@@ -17,6 +17,13 @@
 
 #pragma once
 
+// Ensure ChibiOS HAL config markers are present for v8.4
+#define _CHIBIOS_HAL_CONF_
+#define _CHIBIOS_HAL_CONF_VER_8_4_
+
+// Required subsystems for this board/keymap
+#define HAL_USE_PAL TRUE
 #define HAL_USE_SPI TRUE
 
+// Include the rest of the default HAL configuration
 #include_next <halconf.h>
