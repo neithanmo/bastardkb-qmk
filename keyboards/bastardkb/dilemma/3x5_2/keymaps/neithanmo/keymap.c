@@ -149,8 +149,9 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         }
         case CLOSE_BUFF: {
             if (pressed) {
-                SEND_STRING(":bd");
-                tap_code16(KC_ENT);
+                // SEND_STRING(":bd");
+                tap_code16(KC_F4);
+                // tap_code16(KC_ENT);
             }
             break;
         }
@@ -377,15 +378,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         default:
             return true;
     }
-}
-
-report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-    static char x = 0;
-    static char y = 0;
-    if (x != mouse_report.x && y != mouse_report.y) {
-        x = mouse_report.x;
-        y = mouse_report.y;
-        if (!IS_LAYER_ON(LAYER_NAV)) layer_on(LAYER_NAV);
-    }
-    return mouse_report;
 }
